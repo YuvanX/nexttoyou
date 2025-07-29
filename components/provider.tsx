@@ -5,7 +5,10 @@ import { ThemeProvider } from "./ui/theme-provider"
 export const Providers = ({ children }: { children: React.ReactNode }) => {
     return <div>
         <SessionProvider>
-            <ThemeProvider>
+            <ThemeProvider attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
                 {children}
             </ThemeProvider>
         </SessionProvider>
