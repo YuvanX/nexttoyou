@@ -1,5 +1,12 @@
-export default function UserTypePage() {
-    return <div>
-        hi there
+import { auth } from "@/auth"
+import { UserSelection } from "@/components/user-selection"
+import { redirect } from "next/navigation"
+
+export default async function UserTypePage() {
+    const session = await auth()
+    if(!session?.user) redirect("/")
+        
+    return <div className="flex justify-center items-center h-screen">
+        <UserSelection />
     </div>
 }

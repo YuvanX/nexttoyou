@@ -43,9 +43,15 @@ model User {
   name          String?
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
+  userType      UserType  @default(NormalUser)
   image         String?
   accounts      Account[]
   sessions      Session[]
  
   @@map("users")
+}
+
+enum UserType {
+  NormalUser
+  Owner
 }
