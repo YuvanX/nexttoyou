@@ -6,7 +6,7 @@ import { ModeToggle } from "./mode-toggle"
 export const AppBar = () => {
     const session = useSession()
     console.log(session.data?.user?.image)
-    return <div className="flex justify-between items-center px-8 py-4 border-b">
+    return <div className="flex justify-between items-center px-8 py-4 border-b w-full fixed backdrop-blur-lg top-0">
         <img src="/n2u.png" className="w-10 h-10 rounded-lg"/>
 
         <div className="flex justify-center gap-4">

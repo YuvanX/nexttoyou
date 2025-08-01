@@ -2,7 +2,6 @@ import { Ban, CheckCheck, MapPinHouse, Plus, Star } from "lucide-react"
 import { Button } from "./ui/button"
 import { Stats } from "./ui/stats"
 import { Input } from "./ui/input"
-import { Separator } from "./ui/separator"
 import { PropertyCard } from "./ui/property-card"
 
 export const DashBoard = () => {
@@ -23,7 +22,7 @@ export const DashBoard = () => {
         value: "4.8",
         icon: Star
     }]
-    return <div>
+    return <div className="pt-24">
         <div className="flex justify-between items-center px-8 my-5">
             <div>
                 <div className="text-xl font-bold">Your Properties</div>

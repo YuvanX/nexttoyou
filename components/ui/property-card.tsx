@@ -1,4 +1,4 @@
-import { MapIcon, Star } from "lucide-react"
+import { MapIcon } from "lucide-react"
 import Image from "next/image"
 import { StarIcon } from "./star-icon"
 

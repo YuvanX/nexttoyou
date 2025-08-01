@@ -8,7 +8,9 @@ import { ModeToggle } from "./mode-toggle";
 export const TopBar = () => {
     return <div className="fixed top-5 w-full px-20">
         <div className="w-full flex items-center   justify-between border px-4 py-3 rounded-lg">
-            <div className="tracking-tighter font-semibold underline">nexttoyou</div>
+            <div className="tracking-tighter font-semibold underline">
+                <img src="/n2u.png" className="w-10 h-10 rounded-lg"/>
+            </div>
             <div className="flex items-center gap-x-4">
                 <ModeToggle />
                 <Dialog>
