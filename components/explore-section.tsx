@@ -3,12 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 
 export const ExploreSection = () => {
     return <div className="font-bricolage flex flex-col items-center mb-20 space-y-5">
-        <div className="text-5xl font-semibold">
+        <div className="text-3xl md:text-4xl lg:text-5xl font-semibold">
             How it Works ?
         </div>
 
-        <div className="flex items-center gap-5">
-            <Card className="min-w-lg">
+        <div className="flex flex-col md:flex-row flex-wrap  gap-5 w-full items-center justify-center px-2">
+            <Card className="md:min-w-md lg:min-w-lg">
                 <CardHeader>
                     <CardTitle className="text-xl">Are you Searching for Accomodations ?</CardTitle>
                     <CardDescription>If you're looking for a place to stay, this is your use case.</CardDescription>
@@ -23,7 +23,7 @@ export const ExploreSection = () => {
                     </ul>
                 </CardContent>
             </Card>
-            <Card className="min-w-lg">
+            <Card className="md:min-w-md lg:min-w-lg">
                 <CardHeader>
                     <CardTitle className="text-xl">Own a Property?</CardTitle>
                     <CardDescription>List and manage your hostel or PG with ease.</CardDescription>
