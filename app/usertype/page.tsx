@@ -1,5 +1,5 @@
 import { auth } from "@/auth"
-import { UserSelection } from "@/components/user-selection"
+import { UserSelection } from "@/components/ui/user-selection" 
 import { redirect } from "next/navigation"
 
 export default async function UserTypePage() {

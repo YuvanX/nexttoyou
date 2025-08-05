@@ -1,7 +1,7 @@
 'use client'
 import { ArrowRight, Check } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
-import { Button } from "./ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
+import { Button } from "./button"
 import axios from "axios"
 import { redirect, useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
