@@ -1,4 +1,4 @@
-import { DashBoard } from "@/components/dashboard-section";
+import { DashBoard } from "@/components/ui/dashboard-section";
 import { AppBar } from "@/components/ui/owner-appbar";
 
 

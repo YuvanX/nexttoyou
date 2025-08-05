@@ -9,49 +9,147 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@map("sessions")
 }
- 
+
 model User {
-  id            String    @id @default(cuid())
+  id            String          @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  userType      UserType  @default(NormalUser)
+  email         String?         @unique
+  emailVerified DateTime?       @map("email_verified")
+  userType      UserType        @default(NormalUser)
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
+  accomodations Accommodation[]
+
   @@map("users")
+}
+
+model Accommodation {
+  id               String           @id @default(cuid())
+  name             String
+  description      String?
+  price            Int
+  accomodationType AccomodationType
+  paymentType      PaymentType
+
+  createdAt DateTime @default(now())
+
+  userId     String
+  locationId String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  
+
+  facilities  AccommodationFacility[]
+  images      AccommodationImage[]
+  capacites AccommodationCapacity[]
+}
+
+model Location {
+  id         String @id @default(cuid())
+  streetName String
+  city       String
+  state      String
+  zipcode    Int
+  country    String
+
+  accomodations Accommodation[]
+}
+
+model Capacity {
+  id    String @id @default(cuid())
+  label String
+
+  accomodations AccommodationCapacity[]
+}
+
+model Facility {
+  id    String @id @default(cuid())
+  label String
+
+  accomodations AccommodationFacility[]
+}
+
+model Image {
+  id       String @id @default(cuid())
+  imageUrl String
+
+  accomodations AccommodationImage[]
+}
+
+model AccommodationFacility {
+  id              String @id @default(cuid())
+  accommodationId String
+  facilityId      String
+
+  accommodation Accommodation @relation(fields: [accommodationId], references: [id], onDelete: Cascade)
+  facility      Facility      @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+
+  @@unique([accommodationId, facilityId])
+}
+
+model AccommodationImage {
+  id              String @id @default(cuid())
+  accommodationId String
+  imageId         String
+
+  accommodation Accommodation @relation(fields: [accommodationId], references: [id], onDelete: Cascade)
+  image         Image         @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@unique([accommodationId, imageId])
+}
+
+model AccommodationCapacity {
+  id                String   @id @default(cuid())
+  capacityId        String
+  accommodationId   String
+
+  capacity        Capacity    @relation(fields: [capacityId], references: [id])
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+
+ @@unique([accommodationId, capacityId])
 }
 
 enum UserType {
   NormalUser
   Owner
+}
+
+enum AccomodationType {
+  Hostel
+  PG
+}
+
+enum PaymentType {
+  Monthly
+  Day
 }

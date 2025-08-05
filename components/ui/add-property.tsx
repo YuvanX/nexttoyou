@@ -1,11 +1,11 @@
 'use client'
 import { Plus } from "lucide-react"
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select"
-import { Textarea } from "./ui/textarea"
-import { FileUpload } from "./ui/file-upload"
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
+import { Input } from "./input"
+import { Label } from "./label"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./select"
+import { Textarea } from "./textarea"
+import { FileUpload } from "./file-upload"
 
 export const AddProperty = () => {
     return <div className="flex flex-col items-center justify-center pt-28 pb-10">

@@ -1,14 +1,13 @@
 'use client'
 import { useSession } from "next-auth/react"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
+// import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
 import { ModeToggle } from "./mode-toggle"
 
 export const AppBar = () => {
     const session = useSession()
     console.log(session.data?.user?.image)
     return <div className="flex justify-between items-center px-8 py-4 border-b w-full fixed backdrop-blur-lg top-0">
-        <img src="/n2u.png" className="w-10 h-10 rounded-lg"/>
-
+       <div className="tracking-tight underline font-semibold">nexttoyou</div>
         <div className="flex justify-center gap-4">
             <ModeToggle />
             {/* <Avatar>

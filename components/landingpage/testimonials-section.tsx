@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
 
 export const TestimonialSection = () => {
-  return <div className="flex flex-col items-center justify-center my-10 max-w-7xl mx-auto ">
+  return <div className="flex flex-col items-center justify-center my-20 max-w-7xl mx-auto ">
 
     <div className="my-10">
       <div className="text-5xl font-bricolage font-semibold">What people say about nexttoyou</div>

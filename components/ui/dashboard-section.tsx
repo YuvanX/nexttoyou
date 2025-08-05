@@ -1,8 +1,8 @@
 import { Ban, CheckCheck, MapPinHouse, Plus, Star } from "lucide-react"
-import { Button } from "./ui/button"
-import { Stats } from "./ui/stats"
-import { Input } from "./ui/input"
-import { PropertyCard } from "./ui/property-card"
+import { Button } from "./button"
+import { Stats } from "./stats"
+import { Input } from "./input"
+import { PropertyCard } from "./property-card"
 
 export const DashBoard = () => {
     const stats = [{
