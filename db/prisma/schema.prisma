@@ -43,7 +43,7 @@ model User {
   name          String?
   email         String?         @unique
   emailVerified DateTime?       @map("email_verified")
-  userType      UserType        @default(NormalUser)
+  userType      UserType        @default(NotSelected)
   image         String?
   accounts      Account[]
   sessions      Session[]
@@ -142,6 +142,7 @@ model AccommodationCapacity {
 enum UserType {
   NormalUser
   Owner
+  NotSelected
 }
 
 enum AccomodationType {
