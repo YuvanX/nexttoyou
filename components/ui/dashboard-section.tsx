@@ -22,7 +22,7 @@ export const DashBoard = () => {
         value: "4.8",
         icon: Star
     }]
-    return <div className="pt-24">
+    return <div className="pt-24 w-full">
         <div className="flex justify-between items-center px-8 my-5">
             <div>
                 <div className="text-xl font-bold">Your Properties</div>

@@ -1,10 +1,13 @@
 import { DashBoard } from "@/components/ui/dashboard-section";
-import { AppBar } from "@/components/ui/owner-appbar";
+import { SidebarInset } from "@/components/ui/sidebar";
+import { SiteHeader } from "@/components/ui/site-header";
+import { StatCard } from "@/components/ui/stats-card";
 
 
 export default function OwnerDashBoard() {
-    return <div>
-        <AppBar />
-        <DashBoard/>
-    </div>
+    return <SidebarInset>
+           <SiteHeader />
+           <StatCard />
+        </SidebarInset>
+
 }
