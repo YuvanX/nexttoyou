@@ -6,7 +6,7 @@ import { StatCard } from "@/components/ui/stats-card";
 
 export default function OwnerDashBoard() {
     return <SidebarInset>
-           <SiteHeader />
+            <SiteHeader />
            <StatCard />
         </SidebarInset>
 
