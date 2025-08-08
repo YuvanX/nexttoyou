@@ -1,9 +1,11 @@
 import { AddProperty } from "@/components/ui/add-property";
-import { AppBar } from "@/components/ui/owner-appbar";
+import { SidebarInset } from "@/components/ui/sidebar";
+import { SiteHeader } from "@/components/ui/site-header";
+
 
 export default function AddPropertyPage() {
-    return <div>
-        <AppBar />
-        <AddProperty />
-    </div>
+    return <SidebarInset>
+    <SiteHeader />
+    <AddProperty />
+</SidebarInset>
 }
