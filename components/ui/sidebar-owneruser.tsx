@@ -1,12 +1,29 @@
-'use client'
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "./dropdown-menu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./sidebar";
+"use client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "./dropdown-menu";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "./sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { IconCreditCard, IconDotsVertical, IconLogout, IconUserCircle } from "@tabler/icons-react";
+import {
+  IconCreditCard,
+  IconDotsVertical,
+  IconLogout,
+  IconUserCircle,
+} from "@tabler/icons-react";
 
 export const SideBarOwnerUser = () => {
-    const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -29,8 +46,7 @@ export const SideBarOwnerUser = () => {
               <IconDotsVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
-        <DropdownMenuContent>
-        <DropdownMenuContent
+          <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
@@ -45,7 +61,7 @@ export const SideBarOwnerUser = () => {
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Yuvan</span>
                   <span className="text-muted-foreground truncate text-xs">
-                  yuvan@gmail.com
+                    yuvan@gmail.com
                   </span>
                 </div>
               </div>
@@ -60,7 +76,6 @@ export const SideBarOwnerUser = () => {
                 <IconCreditCard />
                 Billing
               </DropdownMenuItem>
-             
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
@@ -68,7 +83,6 @@ export const SideBarOwnerUser = () => {
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
