@@ -1,5 +1,5 @@
 import { OwnerSideBar } from "@/components/ui/owner-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function OwnerLayout({
   children,
@@ -15,9 +15,9 @@ export default function OwnerLayout({
         } as React.CSSProperties
       }
     >
-      <OwnerSideBar variant="inset"/>
+      <OwnerSideBar variant="inset" />
 
-        {children}
+      {children}
     </SidebarProvider>
   );
 }

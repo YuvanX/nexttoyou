@@ -1,4 +1,3 @@
-import { Home, List, PlusSquare, Settings, Edit } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -10,43 +9,45 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./sidebar";
-import { IconInnerShadowTop } from "@tabler/icons-react";
+import { IconBuildings, IconCirclePlusFilled, IconDashboard, IconEdit, IconInnerShadowTop, IconLibraryPlusFilled } from "@tabler/icons-react";
+import { SideBarOwnerUser } from "./sidebar-owneruser";
 
-export const OwnerSideBar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+
+export const OwnerSideBar = ({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) => {
   const items = [
     {
       title: "Dashboard",
-      icon: Home,
+      icon: IconDashboard,
       url: "/dashboard",
     },
     {
       title: "My Listing",
-      icon: List,
+      icon: IconBuildings,
       url: "/mylisting",
     },
     {
-      title: "Add Listing",
-      icon: PlusSquare,
-      url: "/add-listing",
+      title: "Add",
+      icon: IconLibraryPlusFilled,
+      url: "/addproperty",
     },
     {
-      title: "Account Setting",
-      icon: Settings,
-      url: "/account-setting",
-    },
-    {
-      title: "Edit Listing",
-      icon: Edit,
+      title: "Edit",
+      icon: IconEdit,
       url: "/edit-listing",
-    },
+    }
   ];
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-            <a href="/dashboard">
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <a href="/dashboard">
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">nexttoyou</span>
               </a>
@@ -55,6 +56,18 @@ export const OwnerSideBar = ({ ...props }: React.ComponentProps<typeof Sidebar>)
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem className="flex items-center gap-2">
+                <SidebarMenuButton className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear">
+                  <IconCirclePlusFilled />
+                  <span>Quick Create</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -72,7 +85,9 @@ export const OwnerSideBar = ({ ...props }: React.ComponentProps<typeof Sidebar>)
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+              <SideBarOwnerUser />
+      </SidebarFooter>
     </Sidebar>
   );
 };

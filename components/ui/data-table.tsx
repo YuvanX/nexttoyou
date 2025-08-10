@@ -21,13 +21,13 @@ export const DataTable = () => {
     },
     {
       propertyname: "Green Meadows Hostel",
-      status: "still occupancy",
+      status: "Available",
       price: 6500,
       type: "hostel",
     },
     {
       propertyname: "City View PG",
-      status: "still occupancy",
+      status: "Available",
       price: 7500,
       type: "pg",
     },
@@ -40,7 +40,7 @@ export const DataTable = () => {
     // Added more properties
     {
       propertyname: "Lakeview PG",
-      status: "still occupancy",
+      status: "Available",
       price: 8200,
       type: "pg",
     },
@@ -52,7 +52,7 @@ export const DataTable = () => {
     },
     {
       propertyname: "Harmony PG",
-      status: "still occupancy",
+      status: "Available",
       price: 7800,
       type: "pg",
     },
@@ -91,7 +91,7 @@ export const DataTable = () => {
                 <TableCell>
                   <Badge
                     variant="outline"
-                    className="px-1.5 text-muted-foreground text-sm"
+                    className="px-2 text-muted-foreground text-sm"
                   >
                     <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
                     {property.status}

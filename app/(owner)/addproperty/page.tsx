@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/ui/site-header";
 
 export default function AddPropertyPage() {
     return <SidebarInset>
-    <SiteHeader />
+    <SiteHeader title="Add Property" />
     <AddProperty />
 </SidebarInset>
 }
