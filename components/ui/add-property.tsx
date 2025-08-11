@@ -1,5 +1,5 @@
 "use client";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -21,8 +21,74 @@ import {
 } from "./select";
 import { Textarea } from "./textarea";
 import { FileUpload } from "./file-upload";
+import { useState } from "react";
+import { AccomType, PricingOptions, PropertyType } from "@/types/accomType";
+import { Button } from "./button";
 
 export const AddProperty = () => {
+  const [propertyDetails, setPropertyDetails] = useState<AccomType>({
+    propertyName: "",
+    propertyType: PropertyType.Hostel,
+    description: "",
+    streetName: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    pricingOptions: PricingOptions.Month,
+    pricing: "",
+    facilities: [],
+    photos: [],
+    contactName: "",
+    contactNumber: "",
+  });
+
+  const handlePropertyType = (value: any) => {
+    if (value === "hostel") {
+      setPropertyDetails({
+        ...propertyDetails,
+        propertyType: PropertyType.Hostel,
+      });
+    } else {
+      setPropertyDetails({ ...propertyDetails, propertyType: PropertyType.Pg });
+    }
+  };
+
+  const handlePricingOptions = (value: any) => {
+    if (value === "pay per month") {
+      setPropertyDetails({
+        ...propertyDetails,
+        pricingOptions: PricingOptions.Month,
+      });
+    } else {
+      setPropertyDetails({
+        ...propertyDetails,
+        pricingOptions: PricingOptions.Day,
+      });
+    }
+  };
+
+  const addFacility = () => {
+    setPropertyDetails({
+      ...propertyDetails,
+      facilities: [...propertyDetails.facilities, ""],
+    });
+  };
+
+  const removeFacility = (index: number) => {
+    const filteredFacilites = propertyDetails.facilities.filter(
+      (_, idx) => idx !== index
+    );
+    setPropertyDetails({ ...propertyDetails, facilities: filteredFacilites });
+  };
+
+  const handleFacilityChange = (index: number, value: string) => {
+    const updatedFacilities = [...propertyDetails.facilities];
+    updatedFacilities[index] = value;
+    setPropertyDetails({ ...propertyDetails, facilities: updatedFacilities });
+  };
+
+  console.log(propertyDetails.facilities);
+
   return (
     <div className="flex flex-col items-center justify-center py-10">
       <div className="space-y-1 items-center flex flex-col my-5">
@@ -44,6 +110,12 @@ export const AddProperty = () => {
               <div className="w-1/2 space-y-2">
                 <Label className="font-medium">Property Name</Label>
                 <Input
+                  onChange={(e) =>
+                    setPropertyDetails({
+                      ...propertyDetails,
+                      propertyName: e.target.value,
+                    })
+                  }
                   className="w-full"
                   placeholder="e.g., Chotu bhai Hostel"
                   type="text"
@@ -52,7 +124,8 @@ export const AddProperty = () => {
               </div>
               <div className="w-1/2 space-y-2">
                 <Label className="font-medium">Property Type</Label>
-                <Select>
+
+                <Select onValueChange={handlePropertyType}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Your type" />
                   </SelectTrigger>
@@ -70,6 +143,12 @@ export const AddProperty = () => {
             <div className="mt-5">
               <Label>Description</Label>
               <Textarea
+                onChange={(e) =>
+                  setPropertyDetails({
+                    ...propertyDetails,
+                    description: e.target.value,
+                  })
+                }
                 className="my-2"
                 required
                 placeholder="Describe about your property, like features etc."
@@ -90,23 +169,62 @@ export const AddProperty = () => {
               <div className="flex gap-2 items-center">
                 <div className="space-y-2 w-1/2">
                   <Label>Street Name</Label>
-                  <Input placeholder="123 Main Street" type="text" required />
+                  <Input
+                    onChange={(e) =>
+                      setPropertyDetails({
+                        ...propertyDetails,
+                        streetName: e.target.value,
+                      })
+                    }
+                    placeholder="123 Main Street"
+                    type="text"
+                    required
+                  />
                 </div>
 
                 <div className="space-y-2 w-1/2">
                   <Label>City</Label>
-                  <Input placeholder="Hyderabad" type="text" />
+                  <Input
+                    onChange={(e) =>
+                      setPropertyDetails({
+                        ...propertyDetails,
+                        city: e.target.value,
+                      })
+                    }
+                    placeholder="Hyderabad"
+                    type="text"
+                  />
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
                 <div className="space-y-2 w-1/3">
                   <Label>State</Label>
-                  <Input placeholder="Telangana" type="text" required />
+                  <Input
+                    onChange={(e) =>
+                      setPropertyDetails({
+                        ...propertyDetails,
+                        state: e.target.value,
+                      })
+                    }
+                    placeholder="Telangana"
+                    type="text"
+                    required
+                  />
                 </div>
                 <div className="space-y-2 w-1/3">
                   <Label>Zip Code</Label>
-                  <Input placeholder="508001" type="text" required />
+                  <Input
+                    onChange={(e) =>
+                      setPropertyDetails({
+                        ...propertyDetails,
+                        zipcode: e.target.value,
+                      })
+                    }
+                    placeholder="508001"
+                    type="text"
+                    required
+                  />
                 </div>{" "}
                 <div className="space-y-2 w-1/3">
                   <Label>Country</Label>
@@ -136,7 +254,8 @@ export const AddProperty = () => {
             <div className="flex gap-2 items-center">
               <div className="space-y-2 w-1/2">
                 <Label>Pricing Options</Label>
-                <Select>
+
+                <Select onValueChange={handlePricingOptions}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Choose Pricing Options" />
                   </SelectTrigger>
@@ -151,7 +270,15 @@ export const AddProperty = () => {
 
               <div className="space-y-2 w-1/2">
                 <Label>Pricing</Label>
-                <Input placeholder="6000rs" />
+                <Input
+                  onChange={(e) =>
+                    setPropertyDetails({
+                      ...propertyDetails,
+                      pricing: e.target.value,
+                    })
+                  }
+                  placeholder="6000rs"
+                />
               </div>
             </div>
           </CardContent>
@@ -162,14 +289,28 @@ export const AddProperty = () => {
           <CardHeader>
             <CardTitle>Facilities</CardTitle>
             <CardDescription>What Facilities do you offer?</CardDescription>
-            <CardAction className="flex gap-1 items-center bg-white text-black px-4 py-1 rounded-lg text-sm">
+            <CardAction
+              onClick={addFacility}
+              className="flex gap-1 items-center bg-white text-black px-4 py-1 rounded-lg text-sm cursor-pointer"
+            >
               <Plus size={15} />
               Add Facility
             </CardAction>
           </CardHeader>
 
           <CardContent className="space-y-3">
-            <Input placeholder="Free wifi" />
+            {propertyDetails.facilities.map((facility, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <Input
+                  onChange={(e) => handleFacilityChange(idx, e.target.value)}
+                  placeholder={`Facility ${idx + 1}`}
+                />
+
+                <Button onClick={() => removeFacility(idx)}>
+                  <X />
+                </Button>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
@@ -197,12 +338,30 @@ export const AddProperty = () => {
             <div className="space-y-5">
               <div className="space-y-2">
                 <Label>Contact Name</Label>
-                <Input placeholder="Yuvan" />
+                <Input
+                  onChange={(e) =>
+                    setPropertyDetails({
+                      ...propertyDetails,
+                      contactName: e.target.value,
+                    })
+                  }
+                  placeholder="Yuvan"
+                />
               </div>
 
               <div className="space-y-2">
                 <Label>Contact Number</Label>
-                <Input placeholder="9087654321" required type="text" />
+                <Input
+                  onChange={(e) =>
+                    setPropertyDetails({
+                      ...propertyDetails,
+                      contactNumber: e.target.value,
+                    })
+                  }
+                  placeholder="9087654321"
+                  required
+                  type="text"
+                />
               </div>
             </div>
           </CardContent>
