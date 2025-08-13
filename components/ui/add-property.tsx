@@ -1,5 +1,5 @@
 "use client";
-import { Plus, Users, X } from "lucide-react";
+import { Check, Plus, Users, X } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -30,12 +30,8 @@ import { Button } from "./button";
 import { useRouter } from "next/navigation";
 import { AccomodationType, PaymentType } from "@/db/src/generated/prisma";
 import { Badge } from "./badge";
+import axios from "axios";
 
-interface CapacitiesType {
-  value: string;
-  label: string;
-  maxOccupants: number
-}
 
 export const AddProperty = () => {
 
@@ -56,7 +52,6 @@ export const AddProperty = () => {
     contactNumber: "",
   });
 
-  const [selectedCapacitites, setSelectedCapacitites] = useState<string[]>([])
 
   const capacities = [
     { value: "2-sharing", label: "2 Sharing", maxOccupants: 2 },
@@ -119,13 +114,59 @@ export const AddProperty = () => {
 
   const handleSelection = (capacity: string) => {
     setPropertyDetails({
-      ...propertyDetails, 
+      ...propertyDetails,
       capacities: propertyDetails.capacities.includes(capacity) ? propertyDetails.capacities.filter(c => c !== capacity) : [...propertyDetails.capacities, capacity]
     })
   }
 
-  console.log(propertyDetails.capacities);
-  
+   const handleSubmit = async () => {
+    const isValid = validateForm(propertyDetails);
+    const formData = new FormData()
+
+    formData.append("propertyName", propertyDetails.propertyName)
+    formData.append("propertyType", propertyDetails.propertyType);
+    formData.append("description", propertyDetails.description);
+    formData.append("streetName", propertyDetails.streetName);
+    formData.append("city", propertyDetails.city);
+    formData.append("state", propertyDetails.state);
+    formData.append("zipcode", propertyDetails.zipcode);
+    formData.append("pricingOptions", propertyDetails.pricingOptions);
+    formData.append("pricing", propertyDetails.pricing);
+    formData.append("contactName", propertyDetails.contactName);
+    formData.append("contactNumber", propertyDetails.contactNumber);
+
+    formData.append("facilities", JSON.stringify(propertyDetails.facilities));
+    formData.append("capacities", JSON.stringify(propertyDetails.capacities));
+
+    propertyDetails.photos.forEach((file) => {
+      formData.append("photos", file);
+    });
+
+    const response = await axios.post("/api/add", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+
+    try {
+    const response = await axios.post("/api/add", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    if (response.status === 200) {
+      router.push("/dashboard");
+    }
+  } catch (err) {
+    console.error("Error:", err);
+  }
+  }
+
+  const validateForm = (info: AccomType) => {
+    if(propertyDetails.propertyName === "") {
+      
+    }
+  }
+
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
@@ -315,7 +356,7 @@ export const AddProperty = () => {
                       pricing: e.target.value,
                     })
                   }
-                  placeholder="6000rs"
+                  placeholder="₹6000"
                 />
               </div>
             </div>
@@ -332,7 +373,7 @@ export const AddProperty = () => {
                       </div>
                       {propertyDetails.capacities.includes(c.value) && <Badge variant="secondary"
                         className="bg-property-accent text-property-accent-foreground text-xs px-1.5 py-0.5">
-                        ✓
+                       <Check />
                       </Badge>}
                     </div>
                   </div>
@@ -428,7 +469,7 @@ export const AddProperty = () => {
 
         <div className="flex items-center justify-between">
           <Button onClick={() => router.push('/dashboard')} className="cursor-pointer" variant="destructive">Cancel</Button>
-          <Button className="cursor-pointer">Submit</Button>
+          <Button onClick={handleSubmit} className="cursor-pointer">Submit</Button>
         </div>
       </div>
     </div>

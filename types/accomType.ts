@@ -1,25 +1,21 @@
+import { AccomodationType, PaymentType } from "@/db/src/generated/prisma";
+
 export type AccomType = {
     propertyName: string;
-    propertyType: PropertyType;
+    propertyType: AccomodationType;
     description: string;
     streetName: string;
     city: string;
     state: string;
     zipcode: string;
-    pricingOptions: PricingOptions,
+    pricingOptions: PaymentType,
     pricing: string;
     facilities: string[],
-    photos: string[],
+    photos: File[],
+    capacities: string[],
     contactName: string;
     contactNumber: string;
 }
 
-export enum PropertyType {
-    Hostel,
-    Pg
-}
 
-export enum PricingOptions {
-    Month,
-    Day
-}
+
