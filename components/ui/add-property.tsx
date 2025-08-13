@@ -1,5 +1,5 @@
 "use client";
-import { Plus, X } from "lucide-react";
+import { Plus, Users, X } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -8,8 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
+
 import { Input } from "./input";
 import { Label } from "./label";
+
 import {
   Select,
   SelectContent,
@@ -19,22 +21,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./select";
+
 import { Textarea } from "./textarea";
 import { FileUpload } from "./file-upload";
 import { useState } from "react";
-import { AccomType, PricingOptions, PropertyType } from "@/types/accomType";
+import { AccomType } from "@/types/accomType";
 import { Button } from "./button";
+import { useRouter } from "next/navigation";
+import { AccomodationType, PaymentType } from "@/db/src/generated/prisma";
+import { Badge } from "./badge";
+
+interface CapacitiesType {
+  value: string;
+  label: string;
+  maxOccupants: number
+}
 
 export const AddProperty = () => {
+
   const [propertyDetails, setPropertyDetails] = useState<AccomType>({
     propertyName: "",
-    propertyType: PropertyType.Hostel,
+    propertyType: AccomodationType.Hostel,
     description: "",
     streetName: "",
     city: "",
     state: "",
     zipcode: "",
-    pricingOptions: PricingOptions.Month,
+    pricingOptions: PaymentType.Monthly,
     pricing: "",
     facilities: [],
     photos: [],
@@ -42,14 +55,26 @@ export const AddProperty = () => {
     contactNumber: "",
   });
 
+  const [selectedCapacitites, setSelectedCapacitites] = useState<string[]>([])
+
+  const capacities = [
+    { value: "2-sharing", label: "2 Sharing", maxOccupants: 2 },
+    { value: "3-sharing", label: "3 Sharing", maxOccupants: 3 },
+    { value: "4-sharing", label: "4 sharing", maxOccupants: 4 },
+    { value: "5plus-sharing", label: "5+ Sharing", maxOccupants: 5 }
+  ]
+
+  const router = useRouter();
+
+
   const handlePropertyType = (value: any) => {
     if (value === "hostel") {
       setPropertyDetails({
         ...propertyDetails,
-        propertyType: PropertyType.Hostel,
+        propertyType: AccomodationType.Hostel,
       });
     } else {
-      setPropertyDetails({ ...propertyDetails, propertyType: PropertyType.Pg });
+      setPropertyDetails({ ...propertyDetails, propertyType: AccomodationType.PG });
     }
   };
 
@@ -57,12 +82,12 @@ export const AddProperty = () => {
     if (value === "pay per month") {
       setPropertyDetails({
         ...propertyDetails,
-        pricingOptions: PricingOptions.Month,
+        pricingOptions: PaymentType.Monthly,
       });
     } else {
       setPropertyDetails({
         ...propertyDetails,
-        pricingOptions: PricingOptions.Day,
+        pricingOptions: PaymentType.Day,
       });
     }
   };
@@ -87,7 +112,14 @@ export const AddProperty = () => {
     setPropertyDetails({ ...propertyDetails, facilities: updatedFacilities });
   };
 
-  console.log(propertyDetails.facilities);
+  const handleFileChange = (files: File[]) => {
+    setPropertyDetails({ ...propertyDetails, photos: files })
+  }
+
+  const handleSelection = (capacity: string) => {
+    setSelectedCapacitites(c => c.includes(capacity) ? c.filter(c => c !== capacity) : [...c, capacity])
+  }
+
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
@@ -241,7 +273,7 @@ export const AddProperty = () => {
           </CardContent>
         </Card>
 
-        {/* Pricing and Capacity Card */}
+        { /* Pricing and Capacity Card */}
         <Card className="w-full md:min-w-3xl">
           <CardHeader>
             <CardTitle>Pricing & Capacity</CardTitle>
@@ -250,7 +282,7 @@ export const AddProperty = () => {
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
+          <CardContent className="space-y-5">
             <div className="flex gap-2 items-center">
               <div className="space-y-2 w-1/2">
                 <Label>Pricing Options</Label>
@@ -279,6 +311,26 @@ export const AddProperty = () => {
                   }
                   placeholder="6000rs"
                 />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="font-semibold text-sm">Room Capacities</div>
+              <div className="text-sm text-muted-foreground">Select all capacity options your property supports</div>
+              <div className="flex items-center gap-2">
+                {capacities.map((c, idx) => (
+                  <div onClick={() => handleSelection(c.value)} key={idx} className={`rounded-lg px-2 py-2 border transition-all duration-200 ${selectedCapacitites.includes(c.value) ? "text-green-500 border-green-500" : ""}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Users size={15} />
+                        <div className="text-sm">{c.label}</div>
+                      </div>
+                      {selectedCapacitites.includes(c.value) && <Badge variant="secondary"
+                        className="bg-property-accent text-property-accent-foreground text-xs px-1.5 py-0.5">
+                        ✓
+                      </Badge>}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </CardContent>
@@ -314,20 +366,6 @@ export const AddProperty = () => {
           </CardContent>
         </Card>
 
-        {/* Upload photos card */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Photos</CardTitle>
-            <CardDescription>
-              Upload high-quality photos of your property (up to 5 photos)
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FileUpload />
-          </CardContent>
-        </Card>
-
-        {/* Contact Information Card */}
         <Card className="w-full md:min-w-3xl">
           <CardHeader>
             <CardTitle>Contact Information</CardTitle>
@@ -366,6 +404,26 @@ export const AddProperty = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Upload photos card */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Photos</CardTitle>
+            <CardDescription>
+              Upload high-quality photos of your property (up to 5 photos)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FileUpload onChange={handleFileChange} />
+          </CardContent>
+        </Card>
+
+        {/* Contact Information Card */}
+
+        <div className="flex items-center justify-between">
+          <Button onClick={() => router.push('/dashboard')} className="cursor-pointer" variant="destructive">Cancel</Button>
+          <Button className="cursor-pointer">Submit</Button>
+        </div>
       </div>
     </div>
   );
