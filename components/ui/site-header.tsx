@@ -1,6 +1,7 @@
 
 import { Separator } from "./separator";
 import { SidebarTrigger } from "./sidebar";
+import ThemeToggleButton from "./theme-toggle-button";
 
 export const SiteHeader = ({ title }: { title: string }) => {
   
@@ -13,7 +14,7 @@ export const SiteHeader = ({ title }: { title: string }) => {
         <div className="text-base font-medium">{title}</div>
       </div>
       <div>
-            Github
+           <ThemeToggleButton />
       </div>
     </header>
   );
