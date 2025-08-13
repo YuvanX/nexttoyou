@@ -51,6 +51,7 @@ export const AddProperty = () => {
     pricing: "",
     facilities: [],
     photos: [],
+    capacities: [],
     contactName: "",
     contactNumber: "",
   });
@@ -117,9 +118,14 @@ export const AddProperty = () => {
   }
 
   const handleSelection = (capacity: string) => {
-    setSelectedCapacitites(c => c.includes(capacity) ? c.filter(c => c !== capacity) : [...c, capacity])
+    setPropertyDetails({
+      ...propertyDetails, 
+      capacities: propertyDetails.capacities.includes(capacity) ? propertyDetails.capacities.filter(c => c !== capacity) : [...propertyDetails.capacities, capacity]
+    })
   }
 
+  console.log(propertyDetails.capacities);
+  
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
@@ -318,13 +324,13 @@ export const AddProperty = () => {
               <div className="text-sm text-muted-foreground">Select all capacity options your property supports</div>
               <div className="flex items-center gap-2">
                 {capacities.map((c, idx) => (
-                  <div onClick={() => handleSelection(c.value)} key={idx} className={`rounded-lg px-2 py-2 border transition-all duration-200 ${selectedCapacitites.includes(c.value) ? "text-green-500 border-green-500" : ""}`}>
+                  <div onClick={() => handleSelection(c.value)} key={idx} className={`rounded-lg px-2 py-2 border transition-all duration-200 ${propertyDetails.capacities.includes(c.value) ? "text-green-500 border-green-500" : ""}`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <Users size={15} />
                         <div className="text-sm">{c.label}</div>
                       </div>
-                      {selectedCapacitites.includes(c.value) && <Badge variant="secondary"
+                      {propertyDetails.capacities.includes(c.value) && <Badge variant="secondary"
                         className="bg-property-accent text-property-accent-foreground text-xs px-1.5 py-0.5">
                         ✓
                       </Badge>}
